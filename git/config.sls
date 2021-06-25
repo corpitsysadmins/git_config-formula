@@ -1,5 +1,5 @@
-{% from "./defaults/map.jinja" import git_data with context -%}
-{% from "./defaults/ssh.jinja" import ssh_data with context -%}
+{% from "git/defaults/map.jinja" import git_data with context -%}
+{% from "git/defaults/ssh.jinja" import ssh_data with context -%}
 
 {% if 'git_hosts' in ssh_data -%}
 {%- for git_host, git_key in ssh_data['git_hosts']|dictsort %}
