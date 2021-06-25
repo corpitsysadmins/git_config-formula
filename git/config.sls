@@ -33,6 +33,3 @@
     - mode: 600  
 {%- endfor %}
 {%- endif %}
-
-{%- endif %}
-
