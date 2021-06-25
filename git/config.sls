@@ -13,8 +13,8 @@
     - mode: insert
     - location: end
     - create: True
-    - user: git_data['user_name']
-    - group: git_data['user_group']
+    - user: {{ git_data['user_name'] }}
+    - group: {{ git_data['user_group'] }}
     - file_mode: 644
     - unless:
         grep -Pxq "{{ git_line_regex }}" {{ git_data['user_home'] }}/.ssh/known_hosts
@@ -28,8 +28,8 @@
   file.managed:
     - contents: |
         {{ key_value | indent(8) }}
-    - user: git_data['user_name']
-    - group: git_data['user_group']
+    - user: {{ git_data['user_name'] }}
+    - group: {{ git_data['user_group'] }}
     - mode: 600  
 {%- endfor %}
 {%- endif %}
