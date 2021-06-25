@@ -7,9 +7,9 @@
 {% import_yaml 'git/defaults/os.yaml' as os %}
 {% import_yaml 'git/defaults/osfinger.yaml' as osfinger %}
 
-{% set osfamily_filtered = salt['grains.filter_by'](osfamily, grain = 'os_family') %}
-{% set os_filtered = salt['grains.filter_by'](os, grain = 'os') %}
-{% set osfinger_filtered = salt['grains.filter_by'](osfinger, grain = 'osfinger') %}
+{% set osfamily_filtered = salt['grains.filter_by'](osfamily, grain = 'os_family') or {} %}
+{% set os_filtered = salt['grains.filter_by'](os, grain = 'os') or {} %}
+{% set osfinger_filtered = salt['grains.filter_by'](osfinger, grain = 'osfinger') or {} %}
 
 {% if defaults.ssh is defined %}
 {% set ssh_data = defaults.ssh %}
