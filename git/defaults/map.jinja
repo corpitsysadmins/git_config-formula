@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{## Start imports as  ##}
+{% import_yaml 'git/defaults/defaults.yaml' as defaults %}
+{% import_yaml 'git/defaults/osfamily.yaml' as osfamily %}
+{% import_yaml 'git/defaults/os.yaml' as os %}
+{% import_yaml 'git/defaults/osfinger.yaml' as osfinger %}
+
+{% set git_data = salt['slsutil.merge'](defaults, 
+    salt['grains.filter_by'](osfamily, grain='os_family',
+      merge=salt['grains.filter_by'](os, grain='os',
+        merge=salt['grains.filter_by'](osfinger, grain='osfinger',
+          merge=salt['pillar.get']('git')
+        )
+      )
+    )
+) %}

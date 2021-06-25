@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{## Start imports as  ##}
+{% import_yaml 'git/defaults/defaults.yaml' as defaults %}
+{% import_yaml 'git/defaults/osfamily.yaml' as osfamily %}
+{% import_yaml 'git/defaults/os.yaml' as os %}
+{% import_yaml 'git/defaults/osfinger.yaml' as osfinger %}
+
+{% set osfamily_filtered = salt['grains.filter_by'](osfamily, grain = 'os_family') %}
+{% set os_filtered = salt['grains.filter_by'](os, grain = 'os') %}
+{% set osfinger_filtered = salt['grains.filter_by'](osfinger, grain = 'osfinger') %}
+
+{% if defaults.ssh is defined %}
+{% set ssh_data = defaults.ssh %}
+{% else %}
+{% set ssh_data = {} %}
+{% endif %}
+
+{% if osfamily_filtered.ssh is defined %}
+{% set ssh_data = salt['slsutil.merge'](ssh_data, osfamily_filtered.ssh) %}
+{% endif %}
+
+{% if os_filtered.ssh is defined %}
+{% set ssh_data = salt['slsutil.merge'](ssh_data, os_filtered.ssh) %}
+{% endif %}
+
+{% if osfinger_filtered.ssh is defined %}
+{% set ssh_data = salt['slsutil.merge'](ssh_data, osfinger_filtered.ssh) %}
+{% endif %}
+
+{% set ssh_data = salt['slsutil.merge'](ssh_data, salt['pillar.get']('git:ssh', default = {})) %}
