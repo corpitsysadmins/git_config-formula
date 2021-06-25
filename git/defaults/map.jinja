@@ -7,8 +7,8 @@
 {% import_yaml 'git/defaults/os.yaml' as os %}
 {% import_yaml 'git/defaults/osfinger.yaml' as osfinger %}
 
-{% set osfamily_map = salt['grains.filter_by'](osfamilymap, grain='os_family') or {} %}
-{% set os_map = salt['grains.filter_by'](osmap, grain='os') or {} %}
-{% set osfinger_map = salt['grains.filter_by'](osfingermap, grain='osfinger') or {} %}
+{% set osfamily_map = salt['grains.filter_by'](osfamily, grain='os_family') or {} %}
+{% set os_map = salt['grains.filter_by'](os, grain='os') or {} %}
+{% set osfinger_map = salt['grains.filter_by'](osfinger, grain='osfinger') or {} %}
 
 {% set git_data = salt['slsutil.merge_all']([defaults, osfamily_map, os_map, osfinger_map, salt['pillar.get']('git', default = {})]) %}
